@@ -46,8 +46,8 @@ class TestMaintenanceIP():
     # 10 | click | css=.btn-outline-primary |
     self.driver.find_element(By.CSS_SELECTOR, ".btn-outline-primary").click()
     # 11 | click | id=form-maintenance-save-button |
-    self.driver.implicitly_wait(2)
-    self.driver.find_element(By.ID, "form-maintenance-save-button").click()
+    save = WebDriverWait(self.driver,15).until(lambda d: d.find_element(By.ID, "form-maintenance-save-button"))
+    save.click()
     # 12 | open | http://34.118.122.203/ro/ |
     self.driver.get("http://34.118.122.203/ro/")
     # 13 | setWindowSize | 1050x708 |
@@ -67,12 +67,12 @@ class TestMaintenanceIP():
     side_bar = WebDriverWait(self.driver, 15).until(lambda d: d.find_element(By.ID, "nav-sidebar"))
     self.driver.execute_script("let container = document.getElementById('nav-sidebar'); container.scrollTo(0,1000);")
     self.driver.find_element(By.CSS_SELECTOR, "#subtab-ShopParameters span").click()
-    self.driver.find_element(By.LINK_TEXT, "General").click()
+    element = WebDriverWait(self.driver, 15).until(lambda d: d.find_element(By.LINK_TEXT, "General"))
+    element.click()
     self.driver.find_element(By.ID, "subtab-AdminMaintenance").click()
     self.driver.find_element(By.ID, "form_maintenance_ip").send_keys("")
-    self.driver.implicitly_wait(10)
-    self.driver.find_element(By.ID, "form_enable_shop_1").click()
-    self.driver.implicitly_wait(2)
+    enable = WebDriverWait(self.driver, 15).until(lambda d: d.find_element(By.ID, "form_enable_shop_1"))
+    enable.click()
     self.driver.find_element(By.ID, "form-maintenance-save-button").click()
     assert "Successful update" in self.driver.find_element(By.CLASS_NAME, "alert-text").text
   
